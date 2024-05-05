@@ -6,12 +6,20 @@ class Modal extends Component {
   handleEsc = ({ code }) => {
     if (code === 'Escape') this.props.toggleModal();
   };
+  closeModal = e => {
+    if (e.target === e.currentTarget) {
+      this.props.toggleModal();
+    }
+  };
   componentDidMount() {
     document.addEventListener('keydown', this.handleEsc);
   }
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleEsc);
+  }
   render() {
     return (
-      <div className={style.overlay} onClick={this.props.toggleModal}>
+      <div className={style.overlay} onClick={e => this.closeModal(e)}>
         <div className={style.modal}>
           <img src={this.props.link} alt="" />
         </div>

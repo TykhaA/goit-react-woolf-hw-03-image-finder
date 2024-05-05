@@ -19,7 +19,10 @@ class App extends Component {
     isShowBtn: false,
   };
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.fetching) {
+    if (
+      prevState.searchValue !== this.state.searchValue ||
+      prevState.searchPage !== this.state.searchPage
+    ) {
       this.getImage();
     }
   }
@@ -33,15 +36,20 @@ class App extends Component {
       );
       this.setState(prev => ({
         imageList: [...prev.imageList, ...data.hits],
-        isLoading: false,
+
         isShowBtn: !!data.hits.length,
       }));
     } catch (error) {
-      this.setState({ isLoading: false, error: error.message });
+      this.setState({ error: error.message });
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
   handleChange = value => {
-    this.setState({ imageList: [], searchValue: value }, this.getImage);
+    this.setState(
+      { imageList: [], searchValue: value, searchPage: 1 },
+      this.getImage
+    );
   };
   handleModal = src => {
     this.setState({ link: src });
@@ -51,7 +59,7 @@ class App extends Component {
     this.setState(prev => ({ isShowModal: !prev.isShowModal }));
   };
   handleLoadMore = () => {
-    this.setState(prev => ({ searchPage: prev.searchPage + 1 }), this.getImage);
+    this.setState(prev => ({ searchPage: prev.searchPage + 1 }));
   };
 
   render() {
