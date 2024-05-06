@@ -46,10 +46,7 @@ class App extends Component {
     }
   };
   handleChange = value => {
-    this.setState(
-      { imageList: [], searchValue: value, searchPage: 1 },
-      this.getImage
-    );
+    this.setState({ imageList: [], searchValue: value, searchPage: 1 });
   };
   handleModal = src => {
     this.setState({ link: src });

@@ -2,7 +2,6 @@ import { Component } from 'react';
 import style from './modal.module.css';
 
 class Modal extends Component {
-  state = {};
   handleEsc = ({ code }) => {
     if (code === 'Escape') this.props.toggleModal();
   };
